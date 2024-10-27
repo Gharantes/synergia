@@ -1,16 +1,23 @@
 import { Component } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { MatButton } from '@angular/material/button';
+import { SidebarComponent, TopbarComponent } from '@synergia-frontend/ui';
 
 @Component({
   standalone: true,
   selector: 'app-root',
   template: `
-    <router-outlet></router-outlet>
+    <div id="layout-container">
+      <lib-topbar></lib-topbar>
+      <div id="main-container">
+        <lib-sidebar></lib-sidebar>
+        <router-outlet></router-outlet>
+      </div>
+    </div>
+
   `,
-  styles: [`  
-  `],
-  imports: [RouterModule, MatButton],
+  styleUrl: `./app.component.scss`,
+  imports: [RouterModule, MatButton, SidebarComponent, TopbarComponent],
 })
 export class AppComponent {
   title = 'synergia-frontend';
