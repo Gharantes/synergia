@@ -15,11 +15,13 @@
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
-      "@synergia-frontend/src/libs/components": [
-        "src/libs/components/src/index.ts"
-      ],
-      "@synergia-frontend/src/libs/routes": ["src/libs/routes/src/index.ts"],
-      "@synergia-frontend/src/libs/views": ["src/libs/views/src/index.ts"]
+      "@synergia-frontend": ["/src/libs/*"],
+      "@synergia-frontend/routes": ["src/libs/routes/src/index.ts"]
+//      "@synergia-frontend/src/libs/components": [
+//        "src/libs/components/src/index.ts"
+//      ],
+//      "@synergia-frontend/src/libs/routes": ["src/libs/routes/src/index.ts"],
+//      "@synergia-frontend/src/libs/views": ["src/libs/views/src/index.ts"]
     }
   },
   "exclude": ["node_modules", "tmp"]
