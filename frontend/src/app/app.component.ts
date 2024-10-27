@@ -6,7 +6,7 @@ import { MatButton } from '@angular/material/button';
   standalone: true,
   selector: 'app-root',
   template: `
-    
+    <router-outlet></router-outlet>
   `,
   styles: [`  
   `],
