@@ -19,6 +19,9 @@
       "@synergia-frontend/routes": ["src/libs/routes/src/index.ts"],
       "@synergia-frontend/src/libs/components/tables": [
         "src/libs/components/tables/src/index.ts"
+      ],
+      "@synergia-frontend/src/libs/components/ui": [
+        "src/libs/components/ui/src/index.ts"
       ]
     }
   },
