@@ -1,1 +1,1 @@
-../sh/gpristine.sh
+../../sh/gpristine.sh
