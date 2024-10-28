@@ -1,7 +1,9 @@
 package com.example.synergia.rest
 
+import br.com.evoge.utils.objects.ResponseMessenger
 import com.example.synergia.dto.UsuarioDto
 import com.example.synergia.services.UsuarioService
+import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.RequestMapping
@@ -15,11 +17,16 @@ class UsuarioResource (
     @GetMapping("getById/{idUsuario}")
     fun getUsuarioById(
         @PathVariable("idUsuario") idUsuario: Long
-    ): UsuarioDto? {
-        return usuarioService.getById(idUsuario);
+    ): ResponseEntity<UsuarioDto?> {
+        return ResponseMessenger.buildResponse(null) {
+            usuarioService.getById(idUsuario);
+        }
+
     }
     @GetMapping("getAll")
-    fun getAllUsuarios(): List<UsuarioDto> {
-        return usuarioService.getAll();
+    fun getAllUsuarios(): ResponseEntity<List<UsuarioDto>> {
+        return ResponseMessenger.buildResponse(null) {
+            usuarioService.getAll();
+        }
     }
 }
