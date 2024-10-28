@@ -1,1 +1,2 @@
-nx generate @nx/angular:library tables --directory=src/libs/components
+# The Second choice
+nx generate @nx/angular:library api --directory=src/libs
