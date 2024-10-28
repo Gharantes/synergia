@@ -1,1 +1,1 @@
-export * from './lib/src-libs-api/src-libs-api.component';
+export * from './lib/api'

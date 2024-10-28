@@ -60,7 +60,8 @@
           "buildTarget": "synergia-frontend:build:production"
         },
         "development": {
-          "buildTarget": "synergia-frontend:build:development"
+          "buildTarget": "synergia-frontend:build:development",
+          "proxyConfig": "app/proxy.conf.json"
         }
       },
       "defaultConfiguration": "development"
