@@ -1,0 +1,1 @@
+nx generate @nx/angular:component create-grouping --project=src-libs-routes --path=src/libs/routes/src/lib/create-grouping
