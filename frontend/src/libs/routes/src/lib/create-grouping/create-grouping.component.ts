@@ -2,22 +2,23 @@ import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatFormField, MatInput } from '@angular/material/input';
+import { CommonFormFieldComponent } from '@synergia-frontend/ui';
 
 @Component({
   selector: 'lib-create-grouping',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, MatInput, MatFormField],
+  imports: [CommonModule, ReactiveFormsModule, MatInput, MatFormField, CommonFormFieldComponent, CommonFormFieldComponent],
   template: `
       <form [formGroup]="form">
-        <mat-form-field [appearance]="'outline'">
-          <mat-label>Nome</mat-label>
-          <input matInput [formControl]="form.controls.name" type="text" />
-        </mat-form-field>
+        <sy-common-form-field
+          [label]="'Nome'"
+          [formControl]="form.controls.name"
+        ></sy-common-form-field>
 
-        <mat-form-field [appearance]="'outline'">
-          <mat-label>Descrição</mat-label>
-          <input matInput [formControl]="form.controls.description" type="text" />
-        </mat-form-field>
+        <sy-common-form-field
+          [label]="'Descrição'"
+          [formControl]="form.controls.description"
+        ></sy-common-form-field>
       </form>
   `,
   styles: [`

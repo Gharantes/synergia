@@ -6,4 +6,10 @@ export const appRoutes: Route[] = [
     path: 'home',
     loadChildren: () =>
       import('@synergia-frontend/routes').then(m => m.homeRouteRoutes)
-  }];
+  },
+  {
+    path: 'create-grouping',
+    loadChildren: () =>
+      import('@synergia-frontend/routes').then(m => m.createGroupingRoutes)
+  },
+];
