@@ -37,6 +37,8 @@ dependencies {
 	implementation("org.jetbrains.kotlin:kotlin-reflect")
 	testImplementation("org.springframework.boot:spring-boot-starter-test")
 
+	/** READ AND WRITE FILES **/
+	implementation("org.apache.poi:poi-ooxml:5.2.3")
 	/** Bancos de Dados **/
 	runtimeOnly("org.postgresql:postgresql")
 	implementation("jakarta.persistence:jakarta.persistence-api")
