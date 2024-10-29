@@ -1,7 +1,7 @@
 package com.example.synergia.rest
 
 import br.com.evoge.utils.objects.ResponseMessenger
-import com.example.synergia.dto.UsuarioDto
+import com.example.synergia.dto.entity_mirror.UsuarioDto
 import com.example.synergia.services.UsuarioService
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.GetMapping

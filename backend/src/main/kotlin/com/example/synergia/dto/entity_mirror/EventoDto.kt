@@ -1,6 +1,6 @@
-package com.example.synergia.dto
+package com.example.synergia.dto.entity_mirror
 
-import com.example.synergia.dto.for_display.InfoPessoaSimplesDto
+import com.example.synergia.dto.output.InfoPessoaSimplesDto
 import com.example.synergia.dto.utilities.Periodo
 
 data class EventoDto(

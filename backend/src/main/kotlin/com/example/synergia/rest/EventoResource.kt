@@ -1,8 +1,7 @@
 package com.example.synergia.rest
 
 import br.com.evoge.utils.objects.ResponseMessenger
-import com.example.synergia.dto.EventoDto
-import com.example.synergia.dto.UsuarioDto
+import com.example.synergia.dto.entity_mirror.EventoDto
 import com.example.synergia.dto.input.CreateEventoDto
 import com.example.synergia.services.EventoService
 import org.springframework.http.ResponseEntity
@@ -38,6 +37,7 @@ class EventoResource (
     ): ResponseEntity<Void> {
         return ResponseMessenger.buildResponse(null) {
             eventoService.createEvento(createEventoDto);
+            null
         }
     }
 }
