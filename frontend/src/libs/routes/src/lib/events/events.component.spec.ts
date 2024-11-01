@@ -1,16 +1,16 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { CreateGroupingComponent } from './create-grouping.component';
+import { EventsComponent } from './events-route.component';
 
-describe('CreateGroupingComponent', () => {
-  let component: CreateGroupingComponent;
-  let fixture: ComponentFixture<CreateGroupingComponent>;
+describe('EventsComponent', () => {
+  let component: EventsComponent;
+  let fixture: ComponentFixture<EventsComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [CreateGroupingComponent],
+      imports: [EventsComponent],
     }).compileComponents();
 
-    fixture = TestBed.createComponent(CreateGroupingComponent);
+    fixture = TestBed.createComponent(EventsComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

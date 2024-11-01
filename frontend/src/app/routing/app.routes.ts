@@ -13,8 +13,8 @@ export const appRoutes: Route[] = [
       import('@synergia-frontend/routes').then(m => m.homeRouteRoutes)
   },
   {
-    path: 'create-grouping',
+    path: 'events',
     loadChildren: () =>
-      import('@synergia-frontend/routes').then(m => m.createGroupingRoutes)
+      import('@synergia-frontend/routes').then(m => m.eventsRoutes)
   },
 ];

@@ -3,7 +3,7 @@ import { EventoResourceService } from '@synergia-frontend/api';
 import { tap } from 'rxjs';
 
 @Injectable()
-export class CreateGroupingFacadeService {
+export class EventsFacadeService {
   constructor(
     private readonly teste: EventoResourceService
   ) {

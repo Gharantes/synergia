@@ -4,12 +4,12 @@ import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatFormField, MatInput } from '@angular/material/input';
 import { CommonFormFieldComponent } from '@synergia-frontend/ui';
 import { MatButton } from '@angular/material/button';
-import { CreateGroupingFacadeService } from './create-grouping-facade.service';
+import { EventsFacadeService } from './events-facade.service';
 
 @Component({
   selector: 'lib-create-grouping',
   standalone: true,
-  providers: [CreateGroupingFacadeService],
+  providers: [EventsFacadeService],
   imports: [CommonModule, ReactiveFormsModule, MatInput, MatFormField, CommonFormFieldComponent, CommonFormFieldComponent, MatButton],
   template: `
       <form [formGroup]="form">
@@ -32,10 +32,10 @@ import { CreateGroupingFacadeService } from './create-grouping-facade.service';
   
   `]
 })
-export class CreateGroupingComponent {
+export class EventsRouteComponent {
   constructor(
     private readonly fb: FormBuilder,
-    private readonly facade: CreateGroupingFacadeService,
+    private readonly facade: EventsFacadeService,
   ) {
   }
 
