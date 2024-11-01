@@ -20,8 +20,8 @@ open class Evento {
     @SequenceGenerator(name = "evento_seq", sequenceName = "evento_seq", allocationSize = 1)
     open var id: Long? = null
 
-    @OneToOne(mappedBy = "evento")
-    open var detalhesEvento: DetalhesEvento? = null
+//    @OneToOne(mappedBy = "evento")
+//    open var detalhesEvento: DetalhesEvento? = null
 
     @Column(name = "name", nullable = false)
     open var name: String? = null
