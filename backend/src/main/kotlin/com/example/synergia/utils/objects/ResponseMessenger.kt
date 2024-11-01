@@ -1,4 +1,4 @@
-package br.com.evoge.utils.objects
+package com.example.synergia.utils.objects
 
 import org.springframework.http.HttpHeaders
 import org.springframework.http.ResponseEntity

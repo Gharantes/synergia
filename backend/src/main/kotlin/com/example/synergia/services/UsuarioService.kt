@@ -39,4 +39,8 @@ class UsuarioService {
         }
         return workbook
     }
+
+    fun exportUsersAsExcel() {
+        TODO("Not yet implemented")
+    }
 }

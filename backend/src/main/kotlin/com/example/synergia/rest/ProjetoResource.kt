@@ -1,6 +1,6 @@
 package com.example.synergia.rest
 
-import br.com.evoge.utils.objects.ResponseMessenger
+import com.example.synergia.utils.objects.ResponseMessenger
 import com.example.synergia.dto.entity_mirror.ProjetoDto
 import com.example.synergia.dto.input.CreateProjetoDto
 import com.example.synergia.services.ProjetoService
@@ -14,49 +14,49 @@ import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
 
 @RestController
-@RequestMapping("/api/projeto")
+@RequestMapping("/api/project")
 class ProjetoResource (
-    private val projetoService: ProjetoService,
+    private val projectService: ProjetoService,
 ) {
-    @GetMapping("get-by-id/{id-projeto}")
-    fun getProjetoById(
-        @PathVariable("id-projeto") idProjeto: Long
+    @GetMapping("get-by-id/{id-project}")
+    fun getProjectById(
+        @PathVariable("id-project") idProjeto: Long
     ): ResponseEntity<ProjetoDto?> {
         return ResponseMessenger.buildResponse(null) {
-            projetoService.getById(idProjeto);
+            projectService.getById(idProjeto);
         }
     }
     @GetMapping("get-all")
-    fun getAllProjetos(): ResponseEntity<List<ProjetoDto>> {
+    fun getAllProjects(): ResponseEntity<List<ProjetoDto>> {
         return ResponseMessenger.buildResponse(null) {
-            projetoService.getAll();
+            projectService.getAll();
         }
     }
-    @PostMapping("create-projeto")
-    fun createProjeto(
+    @PostMapping("create-project")
+    fun createProject(
         @RequestBody createProjetoDto: CreateProjetoDto
     ): ResponseEntity<Void> {
         return ResponseMessenger.buildResponse(null) {
-            projetoService.createProjeto(createProjetoDto);
+            projectService.createProjeto(createProjetoDto);
             null
         }
     }
-    @PostMapping("assign-projeto-to-evento/{id-projeto}/{id-evento}")
-    fun assignProjetoToEvento(
-        @PathVariable("id-projeto") idProjeto: Long,
+    @PostMapping("assign-projeto-to-evento/{id-project}/{id-evento}")
+    fun assignProjectToEvent(
+        @PathVariable("id-project") idProjeto: Long,
         @PathVariable("id-evento") idEvento: Long
     ): ResponseEntity<Void> {
         return ResponseMessenger.buildResponse(null) {
-            projetoService.assignProjetoToEvento(idProjeto, idEvento);
+            projectService.assignProjetoToEvento(idProjeto, idEvento);
             null
         }
     }
-    @DeleteMapping("delete-projeto/{id-projeto}")
-    fun deleteProjeto(
-        @PathVariable("id-projeto") idProjeto: Long
+    @DeleteMapping("delete-project/{id-project}")
+    fun deleteProject(
+        @PathVariable("id-project") idProjeto: Long
     ): ResponseEntity<Void> {
         return ResponseMessenger.buildResponse(null) {
-            projetoService.deleteProjeto(idProjeto);
+            projectService.deleteProjeto(idProjeto);
             null
         }
     }

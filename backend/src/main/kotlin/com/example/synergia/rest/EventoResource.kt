@@ -1,10 +1,11 @@
 package com.example.synergia.rest
 
-import br.com.evoge.utils.objects.ResponseMessenger
+import com.example.synergia.utils.objects.ResponseMessenger
 import com.example.synergia.dto.entity_mirror.EventoDto
 import com.example.synergia.dto.entity_mirror.ProjetoDto
 import com.example.synergia.dto.input.CreateEventoDto
 import com.example.synergia.services.EventoService
+import com.example.synergia.utils.objects.MediaTypes
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.DeleteMapping
 import org.springframework.web.bind.annotation.GetMapping
@@ -17,45 +18,47 @@ import org.springframework.web.bind.annotation.RestController
 @RestController
 @RequestMapping("/api/evento")
 class EventoResource (
-    private val eventoService: EventoService,
+    private val eventService: EventoService,
 ) {
-    @GetMapping("get-by-id/{id-evento}")
-    fun getEventoById(
-        @PathVariable("id-evento") idEvento: Long
+    @GetMapping("get-by-id/{id-event}")
+    fun getEventById(
+        @PathVariable("id-event") idEvento: Long
     ): ResponseEntity<EventoDto?> {
         return ResponseMessenger.buildResponse(null) {
-            eventoService.getById(idEvento);
+            eventService.getById(idEvento);
         }
     }
     @GetMapping("get-all")
-    fun getAllEvento(): ResponseEntity<List<EventoDto>> {
+    fun getAllEvent(): ResponseEntity<List<EventoDto>> {
         return ResponseMessenger.buildResponse(null) {
-            eventoService.getAll();
+            eventService.getAll();
         }
     }
-    @GetMapping("get-projetos-of-evento/{id-evento}")
-    fun getProjetosOfEvento(
-        @PathVariable("id-evento") idEvento: Long
+    @GetMapping(
+        "get-projects-of-event/{id-event}",
+        produces = [MediaTypes.JSON]
+    ) fun getProjectsOfEvent(
+        @PathVariable("id-event") idEvento: Long
     ): ResponseEntity<List<ProjetoDto>> {
         return ResponseMessenger.buildResponse(null) {
-            eventoService.getProjetosOfEvento(idEvento);
+            eventService.getProjetosOfEvento(idEvento);
         }
     }
-    @PostMapping("create-evento")
-    fun createEvento(
+    @PostMapping("create-event")
+    fun createEvent(
         @RequestBody createEventoDto: CreateEventoDto
     ): ResponseEntity<Void> {
         return ResponseMessenger.buildResponse(null) {
-            eventoService.createEvento(createEventoDto);
+            eventService.createEvento(createEventoDto);
             null
         }
     }
-    @DeleteMapping("delete-evento/{id-evento}")
-    fun deleteEvento(
-        @PathVariable("id-evento") idEvento: Long
+    @DeleteMapping("delete-event/{id-event}")
+    fun deleteEvent(
+        @PathVariable("id-event") idEvento: Long
     ): ResponseEntity<Void> {
         return ResponseMessenger.buildResponse(null) {
-            eventoService.deleteEvento(idEvento);
+            eventService.deleteEvento(idEvento);
             null
         }
     }
