@@ -1,1 +1,2 @@
 nx generate @nx/angular:component create-grouping --project=src-libs-routes --path=src/libs/routes/src/lib/create-grouping
+#nx generate @nx/angular:component login --project=src-libs-routes --path=src/libs/routes/src/lib/login
