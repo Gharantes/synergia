@@ -2,11 +2,12 @@ import { Component, OnDestroy } from '@angular/core';
 import { CommonModule, NgOptimizedImage } from '@angular/common';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { CommonFormFieldComponent } from '@synergia-frontend/ui';
-import { MatButton } from '@angular/material/button';
+import { MatButton, MatIconButton } from '@angular/material/button';
 import { EventsFacadeService } from './events-facade.service';
 import { MatDivider } from '@angular/material/divider';
 import { MatCard } from '@angular/material/card';
 import { Subject } from 'rxjs';
+import { MatIcon } from '@angular/material/icon';
 
 @Component({
   selector: 'lib-events-route',
@@ -20,6 +21,8 @@ import { Subject } from 'rxjs';
     MatDivider,
     MatCard,
     NgOptimizedImage,
+    MatIcon,
+    MatIconButton,
   ],
   template: `
     <form [formGroup]="form">
@@ -41,10 +44,16 @@ import { Subject } from 'rxjs';
     <mat-divider class="divider"></mat-divider>
 
     <div id="event-cards-container">
-      <mat-card 
-        *ngFor="let event of facade.events()" 
+      <mat-card
+        *ngFor="let event of facade.events()"
         class="event-card"
-        [appearance]="'outlined'">
+        [appearance]="'outlined'"
+      >
+        <div>
+          <button mat-icon-button (click)="deleteEvent(event.idEvento)">
+            <mat-icon>delete</mat-icon>
+          </button>
+        </div>
         <div class="event-picture-container">
           <img class="event-picture" [src]="placeholderImgUrl" alt="" />
         </div>
@@ -73,7 +82,7 @@ export class EventsRouteComponent implements OnDestroy {
     public readonly facade: EventsFacadeService,
     private readonly fb: FormBuilder
   ) {
-    this.form = this.createForm()
+    this.form = this.createForm();
 
     this.facade.initializeNgUpdate(this.ngUnsubscribe);
     this.facade.update();
@@ -96,5 +105,9 @@ export class EventsRouteComponent implements OnDestroy {
       description: form.description,
     };
     this.facade.createEvent(formValue);
+  }
+
+  deleteEvent(idEvento: number) {
+    this.facade.deleteEvent(idEvento)
   }
 }

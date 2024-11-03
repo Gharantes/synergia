@@ -37,4 +37,10 @@ export class ProjectsFacadeService {
       tap(() => this.update())
     ).subscribe()
   }
+
+  deleteProject(idProject: number) {
+    this.service.deleteProject(idProject).pipe(
+      tap(() => this.update())
+    ).subscribe()
+  }
 }

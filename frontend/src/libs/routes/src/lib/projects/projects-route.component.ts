@@ -2,13 +2,14 @@ import { Component, OnDestroy } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { CommonFormFieldComponent } from '@synergia-frontend/ui';
 import { FormBuilder, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
-import { MatButton } from '@angular/material/button';
+import { MatButton, MatIconButton } from '@angular/material/button';
 import { MatCard } from '@angular/material/card';
 import { MatDivider } from '@angular/material/divider';
 import { Subject } from 'rxjs';
 import { EventsFacadeService } from '../events/events-facade.service';
 import { Projects } from '@angular/cli/lib/config/workspace-schema';
 import { ProjectsFacadeService } from './projects-facade.service';
+import { MatIcon } from '@angular/material/icon';
 
 @Component({
   selector: 'lib-projects',
@@ -21,17 +22,14 @@ import { ProjectsFacadeService } from './projects-facade.service';
     MatCard,
     MatDivider,
     ReactiveFormsModule,
+    MatIconButton,
+    MatIcon,
   ],
   template: `
     <form [formGroup]="form">
       <sy-common-form-field
         [label]="'Nome'"
         [control]="form.controls.name"
-      ></sy-common-form-field>
-
-      <sy-common-form-field
-        [label]="'Descrição'"
-        [control]="form.controls.description"
       ></sy-common-form-field>
     </form>
 
@@ -51,6 +49,11 @@ import { ProjectsFacadeService } from './projects-facade.service';
         class="event-card"
         [appearance]="'outlined'"
       >
+        <div id="delete-btn">
+          <button mat-icon-button (click)="deleteProject(event.idProjeto)">
+            <mat-icon>delete</mat-icon>
+          </button>
+        </div>
         <div class="event-picture-container">
           <img class="event-picture" [src]="placeholderImgUrl" alt="" />
         </div>
@@ -61,7 +64,7 @@ import { ProjectsFacadeService } from './projects-facade.service';
     </div>
   `,
   styleUrl: 'projects-route.component.scss',
-  providers: [ProjectsFacadeService]
+  providers: [ProjectsFacadeService],
 })
 export class ProjectsRouteComponent implements OnDestroy {
   public readonly placeholderImgUrl =
@@ -88,7 +91,7 @@ export class ProjectsRouteComponent implements OnDestroy {
   public createForm() {
     return this.fb.group({
       name: this.fb.control<string>('', Validators.required),
-      description: this.fb.control<string>('', Validators.required),
+      description: this.fb.control<string>(''),
     });
   }
   get invalidForm() {
@@ -102,5 +105,9 @@ export class ProjectsRouteComponent implements OnDestroy {
       description: form.description,
     };
     this.facade.createProject(formValue);
+  }
+
+  deleteProject(idProjeto: number) {
+    this.facade.deleteProject(idProjeto)
   }
 }

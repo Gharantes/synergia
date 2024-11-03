@@ -37,4 +37,10 @@ export class EventsFacadeService {
       tap(() => this.update())
     ).subscribe()
   }
+
+  deleteEvent(idEvento: number) {
+    this.service.deleteEvent(1, idEvento).pipe(
+      tap(() => this.update())
+    ).subscribe()
+  }
 }
