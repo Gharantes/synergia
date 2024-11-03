@@ -17,15 +17,18 @@ open class Projeto {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     open var id: Long? = null
 
-    @Column(name = "name", nullable = false)
-    open var name: String? = null
-    @Column(name = "description", nullable = false)
-    open var description: String? = null
+    @Column(name= "id_supervisor")
+    open var idSupervisor: Long? = null
+
+    @Column(name = "titulo", nullable = false)
+    open var titulo: String? = null
+    @Column(name = "descricao", nullable = false)
+    open var descricao: String? = null
 
 //    @ManyToMany
 //    open var eventos: MutableSet<Evento> = mutableSetOf()
 
     // The ManyToMany relationship with Evento
-    @ManyToMany(mappedBy = "projetos")  // Refers to 'projetos' in Evento
-    open var eventos: MutableSet<Evento> = mutableSetOf()
+//    @ManyToMany(mappedBy = "projetos")  // Refers to 'projetos' in Evento
+//    open var eventos: MutableSet<Evento> = mutableSetOf()
 }
