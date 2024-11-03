@@ -3,13 +3,31 @@ import { CommonModule } from '@angular/common';
 import { ExtendableTableComponent } from '@synergia-frontend/tables';
 import { UsersFacadeService } from './users-facade.service';
 import { MatButton } from '@angular/material/button';
+import { CommonFileInputButtonComponent } from '@synergia-frontend/ui';
 
 @Component({
   selector: 'lib-users',
   standalone: true,
-  imports: [CommonModule, ExtendableTableComponent, MatButton],
+  imports: [
+    CommonModule,
+    ExtendableTableComponent,
+    MatButton,
+    CommonFileInputButtonComponent,
+  ],
   template: `
-    <button mat-raised-button>Criar Usuários por Excel</button>
+    <common-file-input-button
+      [label]="'Criar Usuários por Excel'"
+      [isBtnDisabled]="false"
+      [multiple]="false"
+      (fileSelectedEvent)="holdFile($event)"
+      [allowedFileTypes]="'.xls,.xlsx,.csv'"
+    ></common-file-input-button>
+    
+    <button
+      mat-raised-button
+      (click)="uploadFile()"
+    >Upload</button>
+    
     <lib-extendable-table
       [columns]="facade.tableInfo"
       [data$]="facade.usersData$"
@@ -30,4 +48,15 @@ import { MatButton } from '@angular/material/button';
 })
 export class UsersRouteComponent {
   constructor(public readonly facade: UsersFacadeService) {}
+
+  private file: File | undefined = undefined;
+  holdFile($event: File) {
+    this.file = $event;
+  }
+
+  uploadFile() {
+    if (this.file) {
+      this.facade.createFile(this.file)
+    }
+  }
 }

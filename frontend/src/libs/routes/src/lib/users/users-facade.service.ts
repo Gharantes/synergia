@@ -56,9 +56,11 @@ export class UsersFacadeService {
       take(1)
     )
   }
-  createProject() {
-    // this.service.createUsersFromFile().pipe(
-    //   tap(() => this.update())
-    // ).subscribe()
+  createFile(file: File) {
+    const asBlob = new Blob([file]);
+
+    this.service.createUsersFromFile(asBlob).pipe(
+      tap(() => this.update())
+    ).subscribe()
   }
 }
