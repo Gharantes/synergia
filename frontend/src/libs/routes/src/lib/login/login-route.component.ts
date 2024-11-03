@@ -5,6 +5,7 @@ import { MatInput } from '@angular/material/input';
 import { MatButton } from '@angular/material/button';
 import { Router } from '@angular/router';
 import { CommonFormFieldComponent } from '@synergia-frontend/ui';
+import { AuthenticationService } from '@synergia-frontend/services';
 
 @Component({
   selector: 'lib-login',
@@ -39,7 +40,7 @@ import { CommonFormFieldComponent } from '@synergia-frontend/ui';
         </form>
         
         <div>
-          <button mat-raised-button (click)="navigateToHome()">Login</button>
+          <button mat-raised-button (click)="login()">Login</button>
           <div>Esqueci minha senha</div>
         </div>
       </div>
@@ -56,7 +57,10 @@ import { CommonFormFieldComponent } from '@synergia-frontend/ui';
   styleUrl: 'login-route.component.scss',
 })
 export class LoginRouteComponent {
-  constructor(private readonly router: Router) {}
+  constructor(
+    private readonly router: Router,
+    private readonly authenticationService: AuthenticationService
+  ) {}
 
   systemOptions: {
     title: string;
@@ -67,8 +71,13 @@ export class LoginRouteComponent {
     { title: 'Bloco 3', imgUrl: 'https://via.placeholder.com/150' },
   ];
 
+
+
+  login() {
+    this.authenticationService.updateAuthenticated(true);
+    this.navigateToHome();
+  }
   navigateToHome() {
-    sessionStorage.setItem('authenticated', 'true');
-    this.router.navigate(['/home']);
+    this.router.navigate(['/home']).then();
   }
 }
