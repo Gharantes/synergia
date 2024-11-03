@@ -1,27 +1,25 @@
-import { Component } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { Component, OnDestroy } from '@angular/core';
+import { CommonModule, NgOptimizedImage } from '@angular/common';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
-import { MatFormField, MatInput } from '@angular/material/input';
 import { CommonFormFieldComponent } from '@synergia-frontend/ui';
 import { MatButton } from '@angular/material/button';
 import { EventsFacadeService } from './events-facade.service';
 import { MatDivider } from '@angular/material/divider';
 import { MatCard } from '@angular/material/card';
+import { Subject } from 'rxjs';
 
 @Component({
-  selector: 'lib-create-grouping',
+  selector: 'lib-events-route',
   standalone: true,
   providers: [EventsFacadeService],
   imports: [
     CommonModule,
     ReactiveFormsModule,
-    MatInput,
-    MatFormField,
-    CommonFormFieldComponent,
     CommonFormFieldComponent,
     MatButton,
     MatDivider,
     MatCard,
+    NgOptimizedImage,
   ],
   template: `
     <form [formGroup]="form">
@@ -36,36 +34,52 @@ import { MatCard } from '@angular/material/card';
       ></sy-common-form-field>
     </form>
 
-    <button
-      mat-raised-button
-      [disabled]="invalidForm"
-      (click)="createGrouping()"
-    >
+    <button mat-raised-button [disabled]="invalidForm" (click)="createEvent()">
       Criar
     </button>
 
-    <mat-divider></mat-divider>
+    <mat-divider class="divider"></mat-divider>
 
     <div id="event-cards-container">
-      <mat-card [appearance]="'outlined'">
-        <div>Title</div>
-        <div>Description</div>
+      <mat-card 
+        *ngFor="let event of facade.events()" 
+        class="event-card"
+        [appearance]="'outlined'">
+        <div class="event-picture-container">
+          <img class="event-picture" [src]="placeholderImgUrl" alt="" />
+        </div>
+        <div class="event-details-container">
+          <div class="event-title">{{ event.titulo }}</div>
+          <div class="event-description">{{ event.descricao }}</div>
+        </div>
       </mat-card>
     </div>
   `,
-  styles: [``],
+  styleUrl: 'events-route.component.scss',
 })
-export class EventsRouteComponent {
+export class EventsRouteComponent implements OnDestroy {
+  public readonly placeholderImgUrl =
+    'https://upload.wikimedia.org/wikipedia/commons/thumb/3/3f/Placeholder_view_vector.svg/681px-Placeholder_view_vector.svg.png';
+
+  ngUnsubscribe = new Subject<void>();
+  ngOnDestroy() {
+    this.ngUnsubscribe.next();
+    this.ngUnsubscribe.complete();
+  }
+
   public readonly form;
 
   constructor(
-    private readonly fb: FormBuilder,
-    private readonly facade: EventsFacadeService
+    public readonly facade: EventsFacadeService,
+    private readonly fb: FormBuilder
   ) {
     this.form = this.fb.group({
       name: this.fb.control<string>('', Validators.required),
       description: this.fb.control<string>('', Validators.required),
     });
+
+    this.facade.initializeNgUpdate(this.ngUnsubscribe);
+    this.facade.update();
   }
 
   public createForm() {
@@ -78,7 +92,7 @@ export class EventsRouteComponent {
     return this.form.invalid;
   }
 
-  createGrouping() {
+  createEvent() {
     const form = this.form.value;
     const formValue = {
       name: form.name,
