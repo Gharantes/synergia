@@ -4,4 +4,7 @@ export const routeLabels: {
 }[] = [
   { label: 'Home', path: '/home' },
   { label: 'Eventos', path: '/events' },
+  { label: 'Projetos', path: '/projects' },
+  { label: 'Roles', path: '/roles' },
+  { label: 'Usuários', path: '/users' },
 ]
