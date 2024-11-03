@@ -1,9 +1,10 @@
-import { Component } from '@angular/core';
+import { Component, OnDestroy } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ExtendableTableComponent } from '@synergia-frontend/tables';
 import { UsersFacadeService } from './users-facade.service';
 import { MatButton } from '@angular/material/button';
 import { CommonFileInputButtonComponent } from '@synergia-frontend/ui';
+import { Subject } from 'rxjs';
 
 @Component({
   selector: 'lib-users',
@@ -22,12 +23,9 @@ import { CommonFileInputButtonComponent } from '@synergia-frontend/ui';
       (fileSelectedEvent)="holdFile($event)"
       [allowedFileTypes]="'.xls,.xlsx,.csv'"
     ></common-file-input-button>
-    
-    <button
-      mat-raised-button
-      (click)="uploadFile()"
-    >Upload</button>
-    
+
+    <button mat-raised-button (click)="uploadFile()">Upload</button>
+
     <lib-extendable-table
       [columns]="facade.tableInfo"
       [data$]="facade.usersData$"
@@ -46,8 +44,18 @@ import { CommonFileInputButtonComponent } from '@synergia-frontend/ui';
   ],
   providers: [UsersFacadeService],
 })
-export class UsersRouteComponent {
-  constructor(public readonly facade: UsersFacadeService) {}
+export class UsersRouteComponent implements OnDestroy {
+  private readonly ngUnsubscribe = new Subject<void>();
+
+  constructor(public readonly facade: UsersFacadeService) {
+    this.facade.initializeNgUpdate(this.ngUnsubscribe);
+    this.facade.update()
+  }
+
+  ngOnDestroy() {
+    this.ngUnsubscribe.next();
+    this.ngUnsubscribe.complete();
+  }
 
   private file: File | undefined = undefined;
   holdFile($event: File) {
@@ -56,7 +64,7 @@ export class UsersRouteComponent {
 
   uploadFile() {
     if (this.file) {
-      this.facade.createFile(this.file)
+      this.facade.createFile(this.file);
     }
   }
 }
