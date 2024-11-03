@@ -1,5 +1,5 @@
-import { Component } from '@angular/core';
-import { RouterModule } from '@angular/router';
+import { AfterViewInit, Component } from '@angular/core';
+import { Router, RouterModule } from '@angular/router';
 import { MatButton } from '@angular/material/button';
 import { SidebarComponent, TopbarComponent } from '@synergia-frontend/ui';
 
@@ -19,6 +19,29 @@ import { SidebarComponent, TopbarComponent } from '@synergia-frontend/ui';
   styleUrl: `./app.component.scss`,
   imports: [RouterModule, MatButton, SidebarComponent, TopbarComponent],
 })
-export class AppComponent {
+export class AppComponent implements AfterViewInit {
   title = 'synergia-frontend';
+
+  constructor(
+    private readonly router: Router,
+  ) {
+  }
+  
+  ngAfterViewInit() {
+    this.checkAuthentication()
+  }
+
+  private checkAuthentication() {
+    if (!this.isAuthenticated()) {
+      this.navigateToLogin();
+    }
+  }
+  private isAuthenticated() {
+    const authenticated = sessionStorage.getItem('authenticated');
+    return authenticated === 'true';
+  }
+
+  private navigateToLogin() {
+    this.router.navigate(['/login']);
+  }
 }

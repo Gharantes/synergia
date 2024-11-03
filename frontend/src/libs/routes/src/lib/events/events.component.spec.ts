@@ -1,16 +1,16 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { SrcLibsRoutesComponent } from './src-libs-routes.component';
+import { EventsComponent } from './events-route.component';
 
-describe('SrcLibsRoutesComponent', () => {
-  let component: SrcLibsRoutesComponent;
-  let fixture: ComponentFixture<SrcLibsRoutesComponent>;
+describe('EventsComponent', () => {
+  let component: EventsComponent;
+  let fixture: ComponentFixture<EventsComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [SrcLibsRoutesComponent],
+      imports: [EventsComponent],
     }).compileComponents();
 
-    fixture = TestBed.createComponent(SrcLibsRoutesComponent);
+    fixture = TestBed.createComponent(EventsComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
