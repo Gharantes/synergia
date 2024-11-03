@@ -5,11 +5,13 @@ import { tap } from 'rxjs';
 @Injectable()
 export class EventsFacadeService {
   constructor(
-    private readonly teste: EventoResourceService
+    private readonly service: EventoResourceService
   ) {
   }
 
-  createGrouping(form: { name: string | null | undefined; description: string | null | undefined }) {
-    // this.teste.createEvento({})
+  getAllEvents() {
+    this.service.getAllEvento().pipe().subscribe()
+  }
+  createEvent(form: { name: string | null | undefined; description: string | null | undefined }) {
   }
 }

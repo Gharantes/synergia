@@ -6,13 +6,22 @@ import { CommonModule } from '@angular/common';
   standalone: true,
   imports: [CommonModule],
   template: `
-    SYNERGIA
+    <div id="top-bar-container">
+      <div>Synergia</div>
+      
+      <div>Guilherme Arantes</div>
+    </div>
   `,
   styles: [`
     :host {
-        height: 75px;
+        height: 55px;
         width: 100%;
         background: green;
+    }
+    #top-bar-container {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
     }
   `],
 })

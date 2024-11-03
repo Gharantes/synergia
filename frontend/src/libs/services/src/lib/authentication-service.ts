@@ -7,6 +7,11 @@ import { BehaviorSubject } from 'rxjs';
 export class AuthenticationService {
   private readonly authenticated$ = new BehaviorSubject<boolean>(false);
 
+  constructor() {
+    this.updateAuthenticated(
+      this.checkSessionStorage()
+    )
+  }
   getAuthenticated() {
     return this.authenticated$.value;
   }
