@@ -1,4 +1,4 @@
-package com.example.synergia.dto
+package com.example.synergia.dto.entity_mirror
 
 data class ProjetoDto(
     var idProjeto: Long,

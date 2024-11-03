@@ -1,4 +1,4 @@
-package com.example.synergia.dto.for_display
+package com.example.synergia.dto.output
 
 import com.example.synergia.dto.enums.TipoUsuario
 

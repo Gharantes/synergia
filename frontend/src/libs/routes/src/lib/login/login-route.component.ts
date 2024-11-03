@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { MatFormField, MatLabel } from '@angular/material/form-field';
+import { MatFormField } from '@angular/material/form-field';
 import { MatInput } from '@angular/material/input';
 import { MatButton } from '@angular/material/button';
 import { Router } from '@angular/router';
@@ -8,6 +8,7 @@ import { Router } from '@angular/router';
 @Component({
   selector: 'lib-login',
   standalone: true,
+  imports: [CommonModule, MatFormField, MatInput, MatButton],
   template: `
     <div id="route-container">
       
@@ -56,7 +57,6 @@ import { Router } from '@angular/router';
       </div>
     </div>
   `,
-  imports: [CommonModule, MatFormField, MatInput, MatButton, MatLabel],
   styleUrl: 'login-route.component.scss',
 })
 export class LoginRouteComponent {

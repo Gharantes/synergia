@@ -33,21 +33,16 @@ import { EventsFacadeService } from './events-facade.service';
   `]
 })
 export class EventsRouteComponent {
-  public form;
   constructor(
     private readonly fb: FormBuilder,
     private readonly facade: EventsFacadeService,
   ) {
-    this.form = this.createForm();
   }
 
-  private createForm() {
-    return this.fb.group({
-      name: this.fb.control(''),
-      description: this.fb.control(''),
-    });
-  }
-
+  form = new this.fb.group({
+    name: this.fb.control<string>('', Validators.required),
+    description: this.fb.control<string>('', Validators.required)
+  });
   get invalidForm() {
     return this.form.invalid
   };
