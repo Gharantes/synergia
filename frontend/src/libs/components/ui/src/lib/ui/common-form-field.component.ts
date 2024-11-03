@@ -1,6 +1,6 @@
 import { Component, Input } from '@angular/core';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
-import { MatFormField } from '@angular/material/form-field';
+import { MatFormField, MatLabel } from '@angular/material/form-field';
 import { MatInput } from '@angular/material/input';
 
 @Component({
@@ -15,12 +15,13 @@ import { MatInput } from '@angular/material/input';
   imports: [
     ReactiveFormsModule,
     MatFormField,
-    MatInput
+    MatInput,
+    MatLabel
   ],
   styles: [`
   `]
 })
 export class CommonFormFieldComponent<T> {
-  @Input() formControl: FormControl<T>;
-  @Input() label: string;
+  @Input() formControl!: FormControl<T>;
+  @Input() label?: string;
 }
