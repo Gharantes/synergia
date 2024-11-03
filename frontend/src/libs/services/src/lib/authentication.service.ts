@@ -24,10 +24,10 @@ export class AuthenticationService {
       this.updateSessionStorage('false')
     }
   }
-  updateSessionStorage(bool: string) {
+  private updateSessionStorage(bool: string) {
     sessionStorage.setItem('authenticated', bool)
   }
-  checkSessionStorage () {
+  private checkSessionStorage () {
     return sessionStorage.getItem('authenticated') == 'true'
   }
 }
