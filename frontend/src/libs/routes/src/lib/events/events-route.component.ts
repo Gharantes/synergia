@@ -73,10 +73,7 @@ export class EventsRouteComponent implements OnDestroy {
     public readonly facade: EventsFacadeService,
     private readonly fb: FormBuilder
   ) {
-    this.form = this.fb.group({
-      name: this.fb.control<string>('', Validators.required),
-      description: this.fb.control<string>('', Validators.required),
-    });
+    this.form = this.createForm()
 
     this.facade.initializeNgUpdate(this.ngUnsubscribe);
     this.facade.update();
