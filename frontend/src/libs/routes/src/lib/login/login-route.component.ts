@@ -1,49 +1,59 @@
-import { Component } from '@angular/core';
+import { Component, ElementRef, ViewChild } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MatFormField, MatLabel } from '@angular/material/form-field';
 import { MatInput } from '@angular/material/input';
 import { MatButton } from '@angular/material/button';
 import { Router } from '@angular/router';
 import { CommonFormFieldComponent } from '@synergia-frontend/ui';
-import { AuthenticationService } from '@synergia-frontend/services';
+import { AuthenticationService, TenantsService } from '@synergia-frontend/services';
 import { LoginFacadeService } from './login-facade.service';
-import { FormBuilder, FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
+import {
+  FormBuilder,
+  FormControl,
+  FormGroup,
+  ReactiveFormsModule,
+} from '@angular/forms';
+import { MatDialog } from '@angular/material/dialog';
+import { RegisterTenantDialogComponent } from './dialog/register-tenant-dialog.component';
 
 @Component({
   selector: 'lib-login',
   standalone: true,
   template: `
-    <div 
-      id="route-container" 
+    <div
+      #container
+      id="route-container"
       *ngIf="{ 
         textHex: facade.loginPageConfigurationSignal()?.textHex ?? 'black',
-      } as style">
+      } as style"
+    >
       <div id="container-for-system-options" class="abs-top-right">
-        <div 
-          *ngIf="selectedTenant"
+        <div
+          *ngIf="tenantsService.selectedTenant() as tenant"
           id="sistema-selecionado"
           [ngStyle]="{ color: style.textHex, 'border-color': style.textHex }">
-          Bloco
+          {{ tenant.label }}
         </div>
         <div id="lista-sistemas">
-          <div 
-            *ngFor="let option of systemOptions" 
+          <div
+            *ngFor="let tenantOption of tenantsService.tenants()"
             class="sistema-option"
             [ngStyle]="{ color: style.textHex, 'border-color': style.textHex }">
-            Opção Bloco
+            {{ tenantOption.label }}
           </div>
-          <div 
+          <div
             class="login-em-novo-sistema"
+            (click)="addNewTenant()"
             [ngStyle]="{ color: style.textHex, 'border-color': style.textHex }">
-            Entrar em outro Tenant
+            Salvar Tenant Novo
           </div>
         </div>
       </div>
 
       <div
         id="container-for-login-form"
-        [ngStyle]="{ 'border-color': style.textHex }">
-        
+        [ngStyle]="{ 'border-color': style.textHex }"
+      >
         <form>
           <lib-sy-common-form-field
             [control]="form.controls.email"
@@ -57,8 +67,13 @@ import { FormBuilder, FormControl, FormGroup, ReactiveFormsModule } from '@angul
         </form>
 
         <div id="login-section">
-          
-          <button mat-raised-button (click)="login()">Login</button>
+          <button
+            mat-raised-button
+            [disabled]="!tenantsService.selectedTenant()"
+            (click)="login()"
+          >
+            Login
+          </button>
           <div [ngStyle]="{ color: style.textHex }">Esqueci minha senha</div>
         </div>
       </div>
@@ -77,40 +92,41 @@ import { FormBuilder, FormControl, FormGroup, ReactiveFormsModule } from '@angul
   styleUrl: 'login-route.component.scss',
 })
 export class LoginRouteComponent {
+  @ViewChild('container') container!: ElementRef;
+
   constructor(
     public readonly facade: LoginFacadeService,
+    public readonly tenantsService: TenantsService,
     private readonly router: Router,
     private readonly authenticationService: AuthenticationService,
     private readonly fb: FormBuilder,
+    private readonly dialog: MatDialog,
   ) {
     this.form = this.createLoginFormGroup();
   }
 
   /** Create Login Form **/
   public form: FormGroup<{
-    email: FormControl<null>,
-    password: FormControl<null>
-  }>
+    email: FormControl<null>;
+    password: FormControl<null>;
+  }>;
   private createLoginFormGroup() {
     return this.fb.group({
       email: this.fb.control(null),
-      password: this.fb.control(null)
-    })
+      password: this.fb.control(null),
+    });
   }
 
-
-  systemOptions: {
-    title: string;
-    imgUrl: string;
-  }[] = [
-  ];
-
-  selectedTenant?: { id: number, label: string }
+  /** Handle Tenants **/
   onTenantSelected() {
-    console.log("Tenant Selected");
+    console.log('Tenant Selected');
   }
 
+  /** Validate Login **/
   login() {
+    if (!this.tenantsService.selectedTenant()) {
+      return;
+    }
     this.authenticationService.updateAuthenticated(true);
     this.navigateToHome();
   }
@@ -118,7 +134,7 @@ export class LoginRouteComponent {
     this.router.navigate(['/home']).then();
   }
 
-  tenantSelected(idTenant: number) {
-
+  addNewTenant() {
+    this.dialog.open(RegisterTenantDialogComponent);
   }
 }

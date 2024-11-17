@@ -1,25 +1,23 @@
-import { Injectable } from '@angular/core';
-import { BehaviorSubject } from 'rxjs';
+import { Injectable, signal } from '@angular/core';
+import { IDoIdentifier } from '@synergia-frontend/utils';
 
 @Injectable({
   providedIn: 'root',
 })
 export class LocalStorageService {
-  public tenants: {
-    id: number,
-    label: string
-  }[] = [];
-
-  public getTenantsFromLocalStorage() {
+  public getTenantsFromLocalStorage(): IDoIdentifier[] {
     const tenantsAsString = localStorage.getItem('tenants');
     if (tenantsAsString) {
-      const a = JSON.parse(tenantsAsString)
+      return JSON.parse(tenantsAsString) as IDoIdentifier[];
+    } else {
+      localStorage.setItem('tenants', JSON.stringify([]));
+      return []
     }
   }
-  public addTenantToLocalStorage() {
-    const tenantsAsString = localStorage.getItem('tenants');
-  }
-  constructor() {
+  public addTenantToLocalStorage(tenant: IDoIdentifier) {
+    const tenants = this.getTenantsFromLocalStorage();
+    tenants.push(tenant);
+    localStorage.setItem('tenants', JSON.stringify(tenants));
   }
 }
 
