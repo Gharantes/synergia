@@ -102,6 +102,7 @@ export class LoginRouteComponent {
     private readonly fb: FormBuilder,
     private readonly dialog: MatDialog,
   ) {
+    this.tenantsService.setTenantsFromLocalStorage();
     this.form = this.createLoginFormGroup();
   }
 
