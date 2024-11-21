@@ -34,6 +34,7 @@ export class LoginFacadeService {
   public setup(
     container: ElementRef
   ) {
+    this.tenantsService.setTenantsFromLocalStorage()
     /** If exists, set default tenant as the last selected one **/
     const tenant = this.tenantsService.setTenantFromLocalStorage();
     /** If Tenant was found, get its login page configurations **/

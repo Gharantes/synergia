@@ -5,6 +5,7 @@ import com.example.synergia.dto.entity_mirror.UsuarioDto
 import com.example.synergia.services.AccountService
 import com.example.synergia.utils.objects.MediaTypes
 import com.example.synergia.utils.objects.ResponseMessenger
+import org.springframework.http.MediaType
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
 import org.springframework.web.multipart.MultipartFile
@@ -45,7 +46,7 @@ class AccountResource (
     }
     @GetMapping(
         "authenticate-account/{id_tenant}",
-        consumes = [MediaTypes.JSON]
+        produces = [MediaTypes.JSON]
     ) fun authenticateAccount(
         @PathVariable("id_tenant") idTenant: Long,
         @RequestParam("login") login: String,

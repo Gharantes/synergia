@@ -29,11 +29,12 @@ export class SnackbarService {
   private showSnackbar() {
     this.dismiss();
     const concatenatedMessages = this.concatenateMessages();
+    console.log(concatenatedMessages);
     this.snackbar.open(concatenatedMessages, undefined);
   }
 
   private concatenateMessages() {
-    return this.messages().join('; ');
+    return this.messages().map(v => v.message).join('; ');
   }
   public temporaryMessage(message: string) {
     const id = this.createUniqueId();
