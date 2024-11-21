@@ -4,4 +4,10 @@ import org.springframework.stereotype.Service
 
 @Service
 class ExportAccountsService {
+    fun exportAccountsAsExcel() {
+
+    }
+    fun exportAccountsAsPDF() {
+
+    }
 }

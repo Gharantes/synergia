@@ -20,7 +20,7 @@ class AccountResource (
         @PathVariable("id") id: Long,
     ): ResponseEntity<AccountDto?> {
         return ResponseMessenger.buildResponse(null) {
-            accountService.getById(id);
+            accountService.getById(idTenant, id);
         }
     }
     @GetMapping(
