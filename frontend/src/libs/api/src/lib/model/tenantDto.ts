@@ -9,10 +9,10 @@
  */
 
 
-export interface ProjetoDto { 
-    idProjeto: number;
-    titulo: string;
-    eventosNoQualParticipa: Array<number>;
-    membrosProjeto: Array<number>;
+export interface TenantDto { 
+    id: number;
+    name: string;
+    owner: string;
+    identifier: string;
 }
 

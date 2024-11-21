@@ -9,8 +9,9 @@
  */
 
 
-export interface CreateEventoDto { 
-    name: string;
+export interface ProjectUpdateDto { 
+    id: number;
+    title: string;
     description: string;
 }
 

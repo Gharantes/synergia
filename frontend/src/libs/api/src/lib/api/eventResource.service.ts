@@ -17,11 +17,9 @@ import { CustomHttpParameterCodec }                          from '../encoder';
 import { Observable }                                        from 'rxjs';
 
 // @ts-ignore
-import { CreateEventoDto } from '../model/createEventoDto';
+import { EventCreateDto } from '../model/eventCreateDto';
 // @ts-ignore
-import { EventoDto } from '../model/eventoDto';
-// @ts-ignore
-import { ProjetoDto } from '../model/projetoDto';
+import { EventDto } from '../model/eventDto';
 
 // @ts-ignore
 import { BASE_PATH, COLLECTION_FORMATS }                     from '../variables';
@@ -32,7 +30,7 @@ import { Configuration }                                     from '../configurat
 @Injectable({
   providedIn: 'root'
 })
-export class EventoResourceService {
+export class EventResourceService {
 
     protected basePath = 'http://localhost:8080';
     public defaultHeaders = new HttpHeaders();
@@ -95,20 +93,16 @@ export class EventoResourceService {
     }
 
     /**
-     * @param idSystem 
-     * @param createEventoDto 
+     * @param eventCreateDto 
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public createEvent(idSystem: number, createEventoDto: CreateEventoDto, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: undefined, context?: HttpContext, transferCache?: boolean}): Observable<any>;
-    public createEvent(idSystem: number, createEventoDto: CreateEventoDto, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: undefined, context?: HttpContext, transferCache?: boolean}): Observable<HttpResponse<any>>;
-    public createEvent(idSystem: number, createEventoDto: CreateEventoDto, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: undefined, context?: HttpContext, transferCache?: boolean}): Observable<HttpEvent<any>>;
-    public createEvent(idSystem: number, createEventoDto: CreateEventoDto, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: undefined, context?: HttpContext, transferCache?: boolean}): Observable<any> {
-        if (idSystem === null || idSystem === undefined) {
-            throw new Error('Required parameter idSystem was null or undefined when calling createEvent.');
-        }
-        if (createEventoDto === null || createEventoDto === undefined) {
-            throw new Error('Required parameter createEventoDto was null or undefined when calling createEvent.');
+    public createEvent(eventCreateDto: EventCreateDto, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: undefined, context?: HttpContext, transferCache?: boolean}): Observable<any>;
+    public createEvent(eventCreateDto: EventCreateDto, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: undefined, context?: HttpContext, transferCache?: boolean}): Observable<HttpResponse<any>>;
+    public createEvent(eventCreateDto: EventCreateDto, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: undefined, context?: HttpContext, transferCache?: boolean}): Observable<HttpEvent<any>>;
+    public createEvent(eventCreateDto: EventCreateDto, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: undefined, context?: HttpContext, transferCache?: boolean}): Observable<any> {
+        if (eventCreateDto === null || eventCreateDto === undefined) {
+            throw new Error('Required parameter eventCreateDto was null or undefined when calling createEvent.');
         }
 
         let localVarHeaders = this.defaultHeaders;
@@ -155,11 +149,11 @@ export class EventoResourceService {
             }
         }
 
-        let localVarPath = `/api/evento/create-event/${this.configuration.encodeParam({name: "idSystem", value: idSystem, in: "path", style: "simple", explode: false, dataType: "number", dataFormat: "int64"})}`;
+        let localVarPath = `/api/event/create-event`;
         return this.httpClient.request<any>('post', `${this.configuration.basePath}${localVarPath}`,
             {
                 context: localVarHttpContext,
-                body: createEventoDto,
+                body: eventCreateDto,
                 responseType: <any>responseType_,
                 withCredentials: this.configuration.withCredentials,
                 headers: localVarHeaders,
@@ -171,20 +165,20 @@ export class EventoResourceService {
     }
 
     /**
-     * @param idSystem 
-     * @param idEvent 
+     * @param idTenant 
+     * @param id 
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public deleteEvent(idSystem: number, idEvent: number, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: undefined, context?: HttpContext, transferCache?: boolean}): Observable<any>;
-    public deleteEvent(idSystem: number, idEvent: number, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: undefined, context?: HttpContext, transferCache?: boolean}): Observable<HttpResponse<any>>;
-    public deleteEvent(idSystem: number, idEvent: number, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: undefined, context?: HttpContext, transferCache?: boolean}): Observable<HttpEvent<any>>;
-    public deleteEvent(idSystem: number, idEvent: number, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: undefined, context?: HttpContext, transferCache?: boolean}): Observable<any> {
-        if (idSystem === null || idSystem === undefined) {
-            throw new Error('Required parameter idSystem was null or undefined when calling deleteEvent.');
+    public deleteEvent(idTenant: number, id: number, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: undefined, context?: HttpContext, transferCache?: boolean}): Observable<any>;
+    public deleteEvent(idTenant: number, id: number, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: undefined, context?: HttpContext, transferCache?: boolean}): Observable<HttpResponse<any>>;
+    public deleteEvent(idTenant: number, id: number, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: undefined, context?: HttpContext, transferCache?: boolean}): Observable<HttpEvent<any>>;
+    public deleteEvent(idTenant: number, id: number, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: undefined, context?: HttpContext, transferCache?: boolean}): Observable<any> {
+        if (idTenant === null || idTenant === undefined) {
+            throw new Error('Required parameter idTenant was null or undefined when calling deleteEvent.');
         }
-        if (idEvent === null || idEvent === undefined) {
-            throw new Error('Required parameter idEvent was null or undefined when calling deleteEvent.');
+        if (id === null || id === undefined) {
+            throw new Error('Required parameter id was null or undefined when calling deleteEvent.');
         }
 
         let localVarHeaders = this.defaultHeaders;
@@ -222,7 +216,7 @@ export class EventoResourceService {
             }
         }
 
-        let localVarPath = `/api/evento/delete-event/${this.configuration.encodeParam({name: "idSystem", value: idSystem, in: "path", style: "simple", explode: false, dataType: "number", dataFormat: "int64"})}/${this.configuration.encodeParam({name: "idEvent", value: idEvent, in: "path", style: "simple", explode: false, dataType: "number", dataFormat: "int64"})}`;
+        let localVarPath = `/api/event/delete-event/${this.configuration.encodeParam({name: "idTenant", value: idTenant, in: "path", style: "simple", explode: false, dataType: "number", dataFormat: "int64"})}/${this.configuration.encodeParam({name: "id", value: id, in: "path", style: "simple", explode: false, dataType: "number", dataFormat: "int64"})}`;
         return this.httpClient.request<any>('delete', `${this.configuration.basePath}${localVarPath}`,
             {
                 context: localVarHttpContext,
@@ -237,16 +231,16 @@ export class EventoResourceService {
     }
 
     /**
-     * @param idSystem 
+     * @param idTenant 
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public getAllEvent(idSystem: number, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<Array<EventoDto>>;
-    public getAllEvent(idSystem: number, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<HttpResponse<Array<EventoDto>>>;
-    public getAllEvent(idSystem: number, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<HttpEvent<Array<EventoDto>>>;
-    public getAllEvent(idSystem: number, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<any> {
-        if (idSystem === null || idSystem === undefined) {
-            throw new Error('Required parameter idSystem was null or undefined when calling getAllEvent.');
+    public getAllEvent(idTenant: number, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<Array<EventDto>>;
+    public getAllEvent(idTenant: number, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<HttpResponse<Array<EventDto>>>;
+    public getAllEvent(idTenant: number, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<HttpEvent<Array<EventDto>>>;
+    public getAllEvent(idTenant: number, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<any> {
+        if (idTenant === null || idTenant === undefined) {
+            throw new Error('Required parameter idTenant was null or undefined when calling getAllEvent.');
         }
 
         let localVarHeaders = this.defaultHeaders;
@@ -285,8 +279,8 @@ export class EventoResourceService {
             }
         }
 
-        let localVarPath = `/api/evento/get-all/${this.configuration.encodeParam({name: "idSystem", value: idSystem, in: "path", style: "simple", explode: false, dataType: "number", dataFormat: "int64"})}`;
-        return this.httpClient.request<Array<EventoDto>>('get', `${this.configuration.basePath}${localVarPath}`,
+        let localVarPath = `/api/event/get-all/${this.configuration.encodeParam({name: "idTenant", value: idTenant, in: "path", style: "simple", explode: false, dataType: "number", dataFormat: "int64"})}`;
+        return this.httpClient.request<Array<EventDto>>('get', `${this.configuration.basePath}${localVarPath}`,
             {
                 context: localVarHttpContext,
                 responseType: <any>responseType_,
@@ -300,20 +294,20 @@ export class EventoResourceService {
     }
 
     /**
-     * @param idSystem 
-     * @param idEvent 
+     * @param idTenant 
+     * @param id 
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public getEventById(idSystem: number, idEvent: number, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<EventoDto>;
-    public getEventById(idSystem: number, idEvent: number, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<HttpResponse<EventoDto>>;
-    public getEventById(idSystem: number, idEvent: number, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<HttpEvent<EventoDto>>;
-    public getEventById(idSystem: number, idEvent: number, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<any> {
-        if (idSystem === null || idSystem === undefined) {
-            throw new Error('Required parameter idSystem was null or undefined when calling getEventById.');
+    public getEventById(idTenant: number, id: number, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<EventDto>;
+    public getEventById(idTenant: number, id: number, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<HttpResponse<EventDto>>;
+    public getEventById(idTenant: number, id: number, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<HttpEvent<EventDto>>;
+    public getEventById(idTenant: number, id: number, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<any> {
+        if (idTenant === null || idTenant === undefined) {
+            throw new Error('Required parameter idTenant was null or undefined when calling getEventById.');
         }
-        if (idEvent === null || idEvent === undefined) {
-            throw new Error('Required parameter idEvent was null or undefined when calling getEventById.');
+        if (id === null || id === undefined) {
+            throw new Error('Required parameter id was null or undefined when calling getEventById.');
         }
 
         let localVarHeaders = this.defaultHeaders;
@@ -352,75 +346,8 @@ export class EventoResourceService {
             }
         }
 
-        let localVarPath = `/api/evento/get-by-id/${this.configuration.encodeParam({name: "idSystem", value: idSystem, in: "path", style: "simple", explode: false, dataType: "number", dataFormat: "int64"})}/${this.configuration.encodeParam({name: "idEvent", value: idEvent, in: "path", style: "simple", explode: false, dataType: "number", dataFormat: "int64"})}`;
-        return this.httpClient.request<EventoDto>('get', `${this.configuration.basePath}${localVarPath}`,
-            {
-                context: localVarHttpContext,
-                responseType: <any>responseType_,
-                withCredentials: this.configuration.withCredentials,
-                headers: localVarHeaders,
-                observe: observe,
-                transferCache: localVarTransferCache,
-                reportProgress: reportProgress
-            }
-        );
-    }
-
-    /**
-     * @param idSystem 
-     * @param idEvent 
-     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
-     * @param reportProgress flag to report request and response progress.
-     */
-    public getProjectsOfEvent(idSystem: number, idEvent: number, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<Array<ProjetoDto>>;
-    public getProjectsOfEvent(idSystem: number, idEvent: number, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<HttpResponse<Array<ProjetoDto>>>;
-    public getProjectsOfEvent(idSystem: number, idEvent: number, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<HttpEvent<Array<ProjetoDto>>>;
-    public getProjectsOfEvent(idSystem: number, idEvent: number, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<any> {
-        if (idSystem === null || idSystem === undefined) {
-            throw new Error('Required parameter idSystem was null or undefined when calling getProjectsOfEvent.');
-        }
-        if (idEvent === null || idEvent === undefined) {
-            throw new Error('Required parameter idEvent was null or undefined when calling getProjectsOfEvent.');
-        }
-
-        let localVarHeaders = this.defaultHeaders;
-
-        let localVarHttpHeaderAcceptSelected: string | undefined = options && options.httpHeaderAccept;
-        if (localVarHttpHeaderAcceptSelected === undefined) {
-            // to determine the Accept header
-            const httpHeaderAccepts: string[] = [
-                'application/json'
-            ];
-            localVarHttpHeaderAcceptSelected = this.configuration.selectHeaderAccept(httpHeaderAccepts);
-        }
-        if (localVarHttpHeaderAcceptSelected !== undefined) {
-            localVarHeaders = localVarHeaders.set('Accept', localVarHttpHeaderAcceptSelected);
-        }
-
-        let localVarHttpContext: HttpContext | undefined = options && options.context;
-        if (localVarHttpContext === undefined) {
-            localVarHttpContext = new HttpContext();
-        }
-
-        let localVarTransferCache: boolean | undefined = options && options.transferCache;
-        if (localVarTransferCache === undefined) {
-            localVarTransferCache = true;
-        }
-
-
-        let responseType_: 'text' | 'json' | 'blob' = 'json';
-        if (localVarHttpHeaderAcceptSelected) {
-            if (localVarHttpHeaderAcceptSelected.startsWith('text')) {
-                responseType_ = 'text';
-            } else if (this.configuration.isJsonMime(localVarHttpHeaderAcceptSelected)) {
-                responseType_ = 'json';
-            } else {
-                responseType_ = 'blob';
-            }
-        }
-
-        let localVarPath = `/api/evento/get-projects-of-event/${this.configuration.encodeParam({name: "idSystem", value: idSystem, in: "path", style: "simple", explode: false, dataType: "number", dataFormat: "int64"})}/${this.configuration.encodeParam({name: "idEvent", value: idEvent, in: "path", style: "simple", explode: false, dataType: "number", dataFormat: "int64"})}`;
-        return this.httpClient.request<Array<ProjetoDto>>('get', `${this.configuration.basePath}${localVarPath}`,
+        let localVarPath = `/api/event/get-by-id/${this.configuration.encodeParam({name: "idTenant", value: idTenant, in: "path", style: "simple", explode: false, dataType: "number", dataFormat: "int64"})}/${this.configuration.encodeParam({name: "id", value: id, in: "path", style: "simple", explode: false, dataType: "number", dataFormat: "int64"})}`;
+        return this.httpClient.request<EventDto>('get', `${this.configuration.basePath}${localVarPath}`,
             {
                 context: localVarHttpContext,
                 responseType: <any>responseType_,

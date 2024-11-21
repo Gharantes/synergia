@@ -9,10 +9,10 @@
  */
 
 
-export interface UsuarioDto { 
-    idUsuario: number;
-    name: string;
-    email: string;
-    permissoes: Array<number>;
+export interface EventDto { 
+    id: number;
+    idTenant: number;
+    title: string;
+    description: string;
 }
 

@@ -17,9 +17,9 @@ import { CustomHttpParameterCodec }                          from '../encoder';
 import { Observable }                                        from 'rxjs';
 
 // @ts-ignore
-import { IdentifierDto } from '../model/identifierDto';
+import { AccountDto } from '../model/accountDto';
 // @ts-ignore
-import { TenantDto } from '../model/tenantDto';
+import { TenantLoginPageConfigInfoDto } from '../model/tenantLoginPageConfigInfoDto';
 
 // @ts-ignore
 import { BASE_PATH, COLLECTION_FORMATS }                     from '../variables';
@@ -30,7 +30,7 @@ import { Configuration }                                     from '../configurat
 @Injectable({
   providedIn: 'root'
 })
-export class TenantResourceService {
+export class LoginPageResourceService {
 
     protected basePath = 'http://localhost:8080';
     public defaultHeaders = new HttpHeaders();
@@ -94,23 +94,33 @@ export class TenantResourceService {
 
     /**
      * @param idTenant 
-     * @param identifier 
+     * @param login 
+     * @param password 
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public getTenantByUniqueKeys(idTenant?: number, identifier?: string, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<IdentifierDto>;
-    public getTenantByUniqueKeys(idTenant?: number, identifier?: string, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<HttpResponse<IdentifierDto>>;
-    public getTenantByUniqueKeys(idTenant?: number, identifier?: string, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<HttpEvent<IdentifierDto>>;
-    public getTenantByUniqueKeys(idTenant?: number, identifier?: string, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<any> {
+    public authenticateAccount(idTenant: number, login: string, password: string, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<AccountDto>;
+    public authenticateAccount(idTenant: number, login: string, password: string, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<HttpResponse<AccountDto>>;
+    public authenticateAccount(idTenant: number, login: string, password: string, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<HttpEvent<AccountDto>>;
+    public authenticateAccount(idTenant: number, login: string, password: string, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<any> {
+        if (idTenant === null || idTenant === undefined) {
+            throw new Error('Required parameter idTenant was null or undefined when calling authenticateAccount.');
+        }
+        if (login === null || login === undefined) {
+            throw new Error('Required parameter login was null or undefined when calling authenticateAccount.');
+        }
+        if (password === null || password === undefined) {
+            throw new Error('Required parameter password was null or undefined when calling authenticateAccount.');
+        }
 
         let localVarQueryParameters = new HttpParams({encoder: this.encoder});
-        if (idTenant !== undefined && idTenant !== null) {
+        if (login !== undefined && login !== null) {
           localVarQueryParameters = this.addToHttpParams(localVarQueryParameters,
-            <any>idTenant, 'id_tenant');
+            <any>login, 'login');
         }
-        if (identifier !== undefined && identifier !== null) {
+        if (password !== undefined && password !== null) {
           localVarQueryParameters = this.addToHttpParams(localVarQueryParameters,
-            <any>identifier, 'identifier');
+            <any>password, 'password');
         }
 
         let localVarHeaders = this.defaultHeaders;
@@ -149,8 +159,8 @@ export class TenantResourceService {
             }
         }
 
-        let localVarPath = `/api/tenant/get-tenant-by-unique-keys`;
-        return this.httpClient.request<IdentifierDto>('get', `${this.configuration.basePath}${localVarPath}`,
+        let localVarPath = `/api/login/authenticate-account/${this.configuration.encodeParam({name: "idTenant", value: idTenant, in: "path", style: "simple", explode: false, dataType: "number", dataFormat: "int64"})}`;
+        return this.httpClient.request<AccountDto>('get', `${this.configuration.basePath}${localVarPath}`,
             {
                 context: localVarHttpContext,
                 params: localVarQueryParameters,
@@ -165,13 +175,17 @@ export class TenantResourceService {
     }
 
     /**
+     * @param idTenant 
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public seeAllTenantsOnDatabase(observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<Array<TenantDto>>;
-    public seeAllTenantsOnDatabase(observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<HttpResponse<Array<TenantDto>>>;
-    public seeAllTenantsOnDatabase(observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<HttpEvent<Array<TenantDto>>>;
-    public seeAllTenantsOnDatabase(observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<any> {
+    public getLoginPageConfigurationsOfTenantByTenantId(idTenant: number, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<TenantLoginPageConfigInfoDto>;
+    public getLoginPageConfigurationsOfTenantByTenantId(idTenant: number, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<HttpResponse<TenantLoginPageConfigInfoDto>>;
+    public getLoginPageConfigurationsOfTenantByTenantId(idTenant: number, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<HttpEvent<TenantLoginPageConfigInfoDto>>;
+    public getLoginPageConfigurationsOfTenantByTenantId(idTenant: number, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<any> {
+        if (idTenant === null || idTenant === undefined) {
+            throw new Error('Required parameter idTenant was null or undefined when calling getLoginPageConfigurationsOfTenantByTenantId.');
+        }
 
         let localVarHeaders = this.defaultHeaders;
 
@@ -209,8 +223,8 @@ export class TenantResourceService {
             }
         }
 
-        let localVarPath = `/api/tenant/see-all-tenants-on-database`;
-        return this.httpClient.request<Array<TenantDto>>('get', `${this.configuration.basePath}${localVarPath}`,
+        let localVarPath = `/api/login/get-login-page-configurations-of-tenant/${this.configuration.encodeParam({name: "idTenant", value: idTenant, in: "path", style: "simple", explode: false, dataType: "number", dataFormat: "int64"})}`;
+        return this.httpClient.request<TenantLoginPageConfigInfoDto>('get', `${this.configuration.basePath}${localVarPath}`,
             {
                 context: localVarHttpContext,
                 responseType: <any>responseType_,
