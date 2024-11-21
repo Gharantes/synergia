@@ -37,7 +37,7 @@ class EventResource (
             eventService.getAll(idTenant);
         }
     }
-    @PostMapping("create-event}")
+    @PostMapping("create-event")
     fun createEvent(
         @RequestBody eventCreateDto: EventCreateDto
     ): ResponseEntity<Void> {
