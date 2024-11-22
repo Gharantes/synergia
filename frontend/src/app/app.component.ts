@@ -2,7 +2,7 @@ import { AfterViewInit, Component } from '@angular/core';
 import { Router, RouterModule } from '@angular/router';
 import { MatButton } from '@angular/material/button';
 import { SidebarComponent, TopbarComponent } from '@synergia-frontend/ui';
-import { AuthenticationService } from '@synergia-frontend/services';
+import { AuthenticationService, TenantsService } from '@synergia-frontend/services';
 import { NgIf } from '@angular/common';
 
 @Component({
@@ -25,16 +25,27 @@ export class AppComponent implements AfterViewInit {
 
   constructor(
     private readonly router: Router,
-    public readonly authorizationService: AuthenticationService
+    public readonly authorizationService: AuthenticationService,
+    private readonly tenantsService: TenantsService,
   ) {}
 
   ngAfterViewInit() {
-    this.checkAuthentication();
+    this.checkSessionAuthentication();
   }
 
-  private checkAuthentication() {
+  private checkSessionAuthentication() {
     if (!this.authorizationService.getAuthenticated()) {
       this.navigateToLogin();
+    } else {
+      let idTenant = this.tenantsService.getTenantId()
+      if (idTenant == null) {
+        this.tenantsService.setTenantsFromLocalStorage();
+        this.tenantsService.setTenantFromLocalStorage();
+        idTenant = this.tenantsService.getTenantId();
+        if (idTenant == null) {
+          this.navigateToLogin();
+        }
+      }
     }
   }
 

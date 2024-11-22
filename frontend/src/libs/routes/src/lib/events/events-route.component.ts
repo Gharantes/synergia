@@ -8,6 +8,9 @@ import { MatDivider } from '@angular/material/divider';
 import { MatCard } from '@angular/material/card';
 import { Subject } from 'rxjs';
 import { MatIcon } from '@angular/material/icon';
+import { EventDto } from '@synergia-frontend/api';
+import { MatDialog } from '@angular/material/dialog';
+import { EventCardDialogComponent } from './dialog/event-card-dialog.component';
 
 @Component({
   selector: 'lib-events-route',
@@ -25,35 +28,53 @@ import { MatIcon } from '@angular/material/icon';
     MatIconButton,
   ],
   template: `
-    <form [formGroup]="form">
+    <div id="events-route-top-contaienr">
       <lib-sy-common-form-field
-        [label]="'Nome'"
+        id="search-field"
+        [prefix]="true"
+        [icon]="'search'"
+        [label]="'Procure por Eventos...'"
         [control]="form.controls.name"
       ></lib-sy-common-form-field>
 
-      <lib-sy-common-form-field
-        [label]="'Descrição'"
-        [control]="form.controls.description"
-      ></lib-sy-common-form-field>
-    </form>
+      <button 
+        id="create-new-event-btn"
+        mat-stroked-button>
+        Criar Novo Evento
+      </button>
+    </div>
+    
 
-    <button mat-raised-button [disabled]="invalidForm" (click)="createEvent()">
-      Criar
-    </button>
+<!--    <form [formGroup]="form">-->
+<!--      <lib-sy-common-form-field-->
+<!--        [label]="'Nome'"-->
+<!--        [control]="form.controls.name"-->
+<!--      ></lib-sy-common-form-field>-->
 
-    <mat-divider class="divider"></mat-divider>
+<!--      <lib-sy-common-form-field-->
+<!--        [label]="'Descrição'"-->
+<!--        [control]="form.controls.description"-->
+<!--      ></lib-sy-common-form-field>-->
+<!--    </form>-->
+
+<!--    <button mat-raised-button [disabled]="invalidForm" (click)="createEvent()">-->
+<!--      Criar-->
+<!--    </button>-->
+
+<!--    <mat-divider class="divider"></mat-divider>-->
 
     <div id="event-cards-container">
       <mat-card
         *ngFor="let event of facade.events()"
+        (click)="openEventCard(event)"
         class="event-card"
         [appearance]="'outlined'"
       >
-        <div>
-          <button mat-icon-button (click)="deleteEvent(event.id)">
-            <mat-icon>delete</mat-icon>
-          </button>
-        </div>
+<!--        <div>-->
+<!--          <button mat-icon-button (click)="deleteEvent(event.id)">-->
+<!--            <mat-icon>delete</mat-icon>-->
+<!--          </button>-->
+<!--        </div>-->
         <div class="event-picture-container">
           <img class="event-picture" [src]="placeholderImgUrl" alt="" />
         </div>
@@ -80,7 +101,8 @@ export class EventsRouteComponent implements OnDestroy {
 
   constructor(
     public readonly facade: EventsFacadeService,
-    private readonly fb: FormBuilder
+    private readonly fb: FormBuilder,
+    private readonly matDialog: MatDialog,
   ) {
     this.form = this.createForm();
 
@@ -108,6 +130,12 @@ export class EventsRouteComponent implements OnDestroy {
   }
 
   deleteEvent(idEvento: number) {
-    this.facade.deleteEvent(idEvento)
+    this.facade.deleteEvent(idEvento);
+  }
+
+  openEventCard(event: EventDto) {
+    this.matDialog.open(EventCardDialogComponent, {
+      data: event
+    });
   }
 }
