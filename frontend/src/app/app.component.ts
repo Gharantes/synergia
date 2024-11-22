@@ -1,9 +1,13 @@
 import { AfterViewInit, Component } from '@angular/core';
-import { Router, RouterModule } from '@angular/router';
-import { MatButton } from '@angular/material/button';
+import { RouterModule } from '@angular/router';
 import { SidebarComponent, TopbarComponent } from '@synergia-frontend/ui';
-import { AuthenticationService, TenantsService } from '@synergia-frontend/services';
+import {
+  AuthenticationService,
+  NavigationService,
+  TenantsService,
+} from '@synergia-frontend/services';
 import { NgIf } from '@angular/common';
+import { tap } from 'rxjs';
 
 @Component({
   standalone: true,
@@ -12,44 +16,61 @@ import { NgIf } from '@angular/common';
     <div id="layout-container">
       <lib-topbar *ngIf="authorizationService.getAuthenticated()"></lib-topbar>
       <div id="main-container">
-        <lib-sidebar *ngIf="authorizationService.getAuthenticated()"></lib-sidebar>
+        <lib-sidebar
+          *ngIf="authorizationService.getAuthenticated()"
+        ></lib-sidebar>
         <router-outlet></router-outlet>
       </div>
     </div>
   `,
   styleUrl: `./app.component.scss`,
-  imports: [RouterModule, MatButton, SidebarComponent, TopbarComponent, NgIf],
+  imports: [RouterModule, SidebarComponent, TopbarComponent, NgIf],
 })
 export class AppComponent implements AfterViewInit {
   title = 'synergia-frontend';
 
   constructor(
-    private readonly router: Router,
     public readonly authorizationService: AuthenticationService,
-    private readonly tenantsService: TenantsService,
+    public readonly navigationService: NavigationService,
+    private readonly tenantsService: TenantsService
   ) {}
 
   ngAfterViewInit() {
-    this.checkSessionAuthentication();
+    this.navigationService
+      .navigationListener()
+      .pipe(
+        tap((route) => {
+          if (route.url == '/tenants') {
+            console.log('PASSWORD CHECK THIS LATER');
+          } else {
+            this.checkSessionAuthentication();
+          }
+        })
+      )
+      .subscribe();
   }
 
   private checkSessionAuthentication() {
-    if (!this.authorizationService.getAuthenticated()) {
-      this.navigateToLogin();
-    } else {
-      let idTenant = this.tenantsService.getTenantId()
+    const authenticated = this.authorizationService.getAuthenticated();
+    let idTenant = this.tenantsService.getTenantId();
+
+    /** If not authenticated, send user to login page **/
+    if (!authenticated) {
+      this.navigationService.navigateToLogin();
+      return;
+    }
+    /** If no Tenant selected, see if latest exists in Local Storage,
+     * and set it as active */
+    if (idTenant == null) {
+      this.tenantsService.setTenantsFromLocalStorage();
+      this.tenantsService.setTenantFromLocalStorage();
+      idTenant = this.tenantsService.getTenantId();
+      /** If no Tenant selected even then, send user to login page **/
       if (idTenant == null) {
-        this.tenantsService.setTenantsFromLocalStorage();
-        this.tenantsService.setTenantFromLocalStorage();
-        idTenant = this.tenantsService.getTenantId();
-        if (idTenant == null) {
-          this.navigateToLogin();
-        }
+        this.navigationService.navigateToLogin();
+        return;
       }
     }
-  }
-
-  private navigateToLogin() {
-    this.router.navigate(['/login']);
+    return;
   }
 }

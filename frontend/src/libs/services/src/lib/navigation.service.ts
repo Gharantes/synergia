@@ -11,13 +11,19 @@ export class NavigationService {
 
   constructor(private readonly router: Router) {
     this.router.setUpLocationChangeListener();
-    this.router.events.pipe(
-      filter(event => event instanceof NavigationEnd),
+
+    this.navigationListener().pipe(
       tap(route => {
         this.previousRoute.set(this.activeRoute());
         this.activeRoute.set(route.url);
       })
     ).subscribe()
+  }
+
+  navigationListener() {
+    return this.router.events.pipe(
+      filter(event => event instanceof NavigationEnd)
+    )
   }
 
   getActiveRoute() {
@@ -34,5 +40,14 @@ export class NavigationService {
   }
   navigateToLogin() {
     this.router.navigate(['login']).then();
+  }
+
+
+
+  navigateToEventsPage() {
+    this.router.navigate(['events']).then();
+  }
+  navigateToCreateEventsPage() {
+    this.router.navigate(['events/create']).then();
   }
 }

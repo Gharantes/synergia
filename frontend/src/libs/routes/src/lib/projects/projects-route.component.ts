@@ -1,13 +1,16 @@
 import { Component, OnDestroy } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { CommonFormFieldComponent } from '@synergia-frontend/ui';
-import { FormBuilder, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
+import {
+  FormBuilder,
+  FormsModule,
+  ReactiveFormsModule,
+  Validators,
+} from '@angular/forms';
 import { MatButton, MatIconButton } from '@angular/material/button';
 import { MatCard } from '@angular/material/card';
 import { MatDivider } from '@angular/material/divider';
 import { Subject } from 'rxjs';
-import { EventsFacadeService } from '../events/events-facade.service';
-import { Projects } from '@angular/cli/lib/config/workspace-schema';
 import { ProjectsFacadeService } from './projects-facade.service';
 import { MatIcon } from '@angular/material/icon';
 
@@ -108,6 +111,6 @@ export class ProjectsRouteComponent implements OnDestroy {
   }
 
   deleteProject(idProjeto: number) {
-    this.facade.deleteProject(idProjeto)
+    this.facade.deleteProject(idProjeto);
   }
 }
