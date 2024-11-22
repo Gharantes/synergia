@@ -2,12 +2,16 @@ import { Component } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { CommonFormFieldComponent } from '@synergia-frontend/ui';
 import { MatButton } from '@angular/material/button';
-import { NavigationService, SnackbarService, TenantsService } from '@synergia-frontend/services';
-import { EventResourceService } from '@synergia-frontend/api';
+import {
+  NavigationService,
+  SnackbarService,
+  TenantsService,
+} from '@synergia-frontend/services';
+import { ProjectResourceService } from '@synergia-frontend/api';
 import { catchError, EMPTY, take, tap } from 'rxjs';
 
 @Component({
-  selector: 'lib-create-events-route',
+  selector: 'lib-create-projects-route',
   standalone: true,
   template: `
     <form [formGroup]="form">
@@ -22,28 +26,31 @@ import { catchError, EMPTY, take, tap } from 'rxjs';
       ></lib-sy-common-form-field>
     </form>
 
-
-    <button mat-raised-button (click)="navigateToEventsPage()" color="warn">
+    <button mat-raised-button (click)="navigateToProjectsPage()" color="warn">
       Voltar
     </button>
-    
-    <button mat-raised-button [disabled]="invalidForm" (click)="createEvent()">
-      Criar
+
+    <button
+      mat-raised-button
+      [disabled]="invalidForm"
+      (click)="createProject()"
+    >
+      Criar Projeto
     </button>
   `,
   styles: [``],
   imports: [ReactiveFormsModule, CommonFormFieldComponent, MatButton],
   providers: [],
 })
-export class CreateEventsRouteComponent {
+export class CreateProjectsRouteComponent {
   public readonly form;
 
   constructor(
     private readonly tenantsService: TenantsService,
     private readonly snackbarService: SnackbarService,
     private readonly navigationService: NavigationService,
-    private readonly eventRService: EventResourceService,
-    private readonly fb: FormBuilder,
+    private readonly projectRService: ProjectResourceService,
+    private readonly fb: FormBuilder
   ) {
     this.form = this.createForm();
   }
@@ -56,29 +63,32 @@ export class CreateEventsRouteComponent {
   public get invalidForm() {
     return this.form.invalid;
   }
-  createEvent() {
+  createProject() {
     const idTenant = this.tenantsService.getTenantId() ?? -1;
     const form = this.form.value;
 
-    this.eventRService.createEvent({
-      title: form.name ?? '',
-      description: form.description ?? '',
-      idTenant: idTenant,
-    }).pipe(
-      catchError(err => {
-        this.snackbarService.handleCatchError(err, 'Erro ao criar evento');
-        return EMPTY;
-      }),
-      tap(() => {
-        this.snackbarService.temporaryMessage('Evento criado com sucesso');
-        this.navigateToEventsPage()
-        this.form.reset();
-      }),
-      take(1),
-    ).subscribe();
+    this.projectRService
+      .createProject({
+        title: form.name ?? '',
+        description: form.description ?? '',
+        idTenant: idTenant,
+      })
+      .pipe(
+        catchError((err) => {
+          this.snackbarService.handleCatchError(err, 'Erro ao criar projecto');
+          return EMPTY;
+        }),
+        tap(() => {
+          this.snackbarService.temporaryMessage('Projecto criado com sucesso');
+          this.navigateToProjectsPage();
+          this.form.reset();
+        }),
+        take(1)
+      )
+      .subscribe();
   }
 
-  navigateToEventsPage() {
-    this.navigationService.navigateEvents().listAll().then();
+  navigateToProjectsPage() {
+    this.navigationService.navigateProjects().listAll().then();
   }
 }

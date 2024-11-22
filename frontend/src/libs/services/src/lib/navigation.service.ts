@@ -43,11 +43,16 @@ export class NavigationService {
   }
 
 
-
-  navigateToEventsPage() {
-    this.router.navigate(['events']).then();
+  navigateEvents () {
+    return {
+      listAll: () => this.router.navigate(['events']),
+      create: () => this.router.navigate(['events/create']),
+    }
   }
-  navigateToCreateEventsPage() {
-    this.router.navigate(['events/create']).then();
+  navigateProjects () {
+    return {
+      listAll: () => this.router.navigate(['projects']),
+      create: () => this.router.navigate(['projects/create']),
+    }
   }
 }

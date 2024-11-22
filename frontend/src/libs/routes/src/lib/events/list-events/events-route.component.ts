@@ -41,8 +41,8 @@ import { NavigationService } from '@synergia-frontend/services';
       <mat-card
         *ngFor="let event of facade.events()"
         (click)="openEventCard(event)"
-        class="event-card"
         [appearance]="'outlined'"
+        class="event-card"
       >
         <div class="event-picture-container">
           <img class="event-picture" [src]="placeholderImgUrl" alt="" />
@@ -60,8 +60,8 @@ export class EventsRouteComponent {
   public readonly placeholderImgUrl =
     'https://upload.wikimedia.org/wikipedia/commons/thumb/3/3f/Placeholder_view_vector.svg/681px-Placeholder_view_vector.svg.png';
 
-
   public readonly searchControl: FormControl<string | null>;
+
   constructor(
     public readonly facade: EventsFacadeService,
     private readonly matDialog: MatDialog,
@@ -91,6 +91,6 @@ export class EventsRouteComponent {
   }
 
   navigateToCreateEventsPage() {
-    this.navigationService.navigateToCreateEventsPage()
+    this.navigationService.navigateEvents().create().then()
   }
 }
