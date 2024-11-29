@@ -3,6 +3,7 @@
   <component name="SqlDialectMappings">
     <file url="file://$PROJECT_DIR$/inserts_test/account.sql" dialect="PostgreSQL" />
     <file url="file://$PROJECT_DIR$/inserts_test/tenant.sql" dialect="PostgreSQL" />
+    <file url="file://$PROJECT_DIR$/selects/all.sql" dialect="PostgreSQL" />
     <file url="file://$PROJECT_DIR$/tables/account.sql" dialect="PostgreSQL" />
     <file url="file://$PROJECT_DIR$/tables/create_domain_later/city.sql" dialect="PostgreSQL" />
     <file url="file://$PROJECT_DIR$/tables/create_domain_later/country.sql" dialect="PostgreSQL" />
